@@ -1,6 +1,7 @@
 import csv
 
 from settings import ITEMSCSV
+from src.phone import Phone
 
 
 class Item:
@@ -55,10 +56,6 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls) -> None:
-        """
-
-        """
-
         with open(ITEMSCSV, 'r', encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
@@ -68,3 +65,6 @@ class Item:
     @staticmethod
     def string_to_number(s):
         return int(float(s))
+
+    def __add__(self, other):
+        return self.quantity + other.quantity
