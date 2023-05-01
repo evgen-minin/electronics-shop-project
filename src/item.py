@@ -23,7 +23,7 @@ class Item:
         self.quantity = quantity
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity}"
 
     def __str__(self):
         return f'{self.__name}'
@@ -55,10 +55,6 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls) -> None:
-        """
-
-        """
-
         with open(ITEMSCSV, 'r', encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
@@ -68,3 +64,8 @@ class Item:
     @staticmethod
     def string_to_number(s):
         return int(float(s))
+
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise TypeError("Можно складывать только экземпляры классов Item и Phone")
