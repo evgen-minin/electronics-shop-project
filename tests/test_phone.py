@@ -29,7 +29,11 @@ def test__repr__(phone1):
     assert repr(phone1) == "Phone('IPhone 14', 120000, 5, 2)"
 
 
-def test_phone__add__():
-    phone1 = Phone("IPhone 14", 100000, 10, 5)
+def test_phone__add__(phone1):
     phone2 = Phone("Samsung", 80000, 15, 10)
-    assert phone1 + phone2 == 25
+    assert phone1 + phone2 == 20
+
+
+def test_add(phone1):
+    with pytest.raises(TypeError):
+        phone1 + 10
