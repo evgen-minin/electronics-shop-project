@@ -1,6 +1,7 @@
 import csv
 
 from settings import ITEMSCSV
+from src.exceptions import InstantiateCSVError
 
 
 class Item:
@@ -55,11 +56,17 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls) -> None:
-        with open(ITEMSCSV, 'r', encoding='windows-1251') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
-                cls.all.append(item)
+        try:
+            with open(ITEMSCSV, 'r', encoding='windows-1251') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if 'name' not in row or 'price' not in row or 'quantity' not in row:
+                        raise InstantiateCSVError("Файл item.csv поврежден")
+
+                    item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
+                    cls.all.append(item)
+        except FileNotFoundError:
+            raise FileNotFoundError("Файл item.csv поврежден")
 
     @staticmethod
     def string_to_number(s):
