@@ -1,7 +1,7 @@
 import csv
 
 from settings import ITEMSCSV
-from src.exceptions import InstantiateCSVError
+from src.exeptions import InstantiateCSVError
 
 
 class Item:
@@ -61,12 +61,12 @@ class Item:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     if 'name' not in row or 'price' not in row or 'quantity' not in row:
-                        raise InstantiateCSVError("Файл item.csv поврежден")
+                        raise InstantiateCSVError("Файл items.csv поврежден")
 
                     item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
                     cls.all.append(item)
         except FileNotFoundError:
-            raise FileNotFoundError("Файл item.csv поврежден")
+            raise FileNotFoundError("Отсутствует файл items.csv")
 
     @staticmethod
     def string_to_number(s):

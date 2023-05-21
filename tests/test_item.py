@@ -53,3 +53,9 @@ def test_item_str(item1):
 def test_item__add__(item1):
     item2 = Item("Ноутбук", 100000, 20)
     assert item1 + item2 == 40
+
+
+def test_instantiate_from_csv_corrupted(capsys):
+    Item.instantiate_from_csv()
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Файл items.csv поврежден"
