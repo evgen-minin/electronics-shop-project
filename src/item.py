@@ -55,9 +55,9 @@ class Item:
         self.price *= self.pay_rate
 
     @classmethod
-    def instantiate_from_csv(cls) -> None:
+    def instantiate_from_csv(cls, file=ITEMSCSV) -> None:
         try:
-            with open(ITEMSCSV, 'r', encoding='windows-1251') as csvfile:
+            with open(file, 'r', encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     if 'name' not in row or 'price' not in row or 'quantity' not in row:

@@ -56,6 +56,7 @@ def test_item__add__(item1):
 
 
 def test_instantiate_from_csv_corrupted(capsys):
-    Item.instantiate_from_csv()
-    captured = capsys.readouterr()
-    assert captured.out.strip() == "Файл items.csv поврежден"
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv("item.csv")
+        captured = capsys.readouterr()
+        assert captured.out.strip() == "Файл items.csv поврежден"
